@@ -1,0 +1,39 @@
+{
+    "manifest_version": 3,
+    "name": "TalesUp to Twitch Poll Extension",
+    "version": "1.0.1",
+    "description": "Create a poll automatically to Twitch affiliates/partners when having an adventure question in TalesUp",
+    "permissions": [
+        "activeTab",
+        "identity",
+        "scripting"
+    ],
+    "icons": {
+        "128": "images/icon128.png",
+        "512": "images/icon512.png"
+    },
+    "host_permissions": [
+        "https://play.talesup.io/",
+        "https://*.twitch.tv/"
+    ],
+    "content_scripts": [
+        {
+            "matches": [ "https://play.talesup.io/*" ],
+            "js": [ "polls.js" ]
+        }
+    ],
+    "action": {
+        "default_popup": "polls.html",
+        "default_icon": {
+            "128": "images/icon128.png",
+            "512": "images/icon512.png"
+        }
+    },
+    "oauth2": {
+        "client_id": "",
+        "scopes": [
+            "user:read:email",
+            "channel:manage:polls"
+        ]
+    }
+}

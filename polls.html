@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>TalesUp to Twitch Poll Extension</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <script src="polls.js"></script>
+    <style>
+        h2,
+        h3,
+        label {
+            margin-bottom: .5rem
+        }
+
+        .col-lg-5,
+        .col-md-6,
+        .container {
+            padding-right: 15px;
+            padding-left: 15px;
+            width: 100%
+        }
+
+        .btn:hover,
+        a {
+            text-decoration: none
+        }
+
+        .btn,
+        .checkbox-wrap,
+        [type=button]:not(:disabled),
+        [type=reset]:not(:disabled),
+        [type=submit]:not(:disabled),
+        button:not(:disabled) {
+            cursor: pointer
+        }
+
+        @font-face {
+            font-family: "FontAwesome";
+            src: url(fonts/FontAwesome-Webfont.woff) format('woff')
+        }
+
+        @font-face {
+            font-family: "Henny Penny";
+            src: url(fonts/HennyPenny-Regular.woff) format('woff')
+        }
+
+        @font-face {
+            font-family: "Open Dyslexic";
+            src: url(fonts/OpenDyslexic-Regular.woff) format('woff')
+        }
+
+        :root {
+            --blue: #007bff;
+            --indigo: #6610f2;
+            --purple: #6f42c1;
+            --pink: #e83e8c;
+            --red: #dc3545;
+            --orange: #fd7e14;
+            --yellow: #ffc107;
+            --green: #28a745;
+            --teal: #20c997;
+            --cyan: #17a2b8;
+            --white: #fff;
+            --gray: #6c757d;
+            --gray-dark: #343a40;
+            --primary: #007bff;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --info: #17a2b8;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --breakpoint-xs: 0;
+            --breakpoint-sm: 576px;
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 992px;
+            --breakpoint-xl: 1200px;
+            --font-family-sans-serif: "Open Dyslexic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+        }
+
+        *,
+        ::after,
+        ::before {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        html {
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        section {
+            display: block
+        }
+
+        body {
+            margin: 0;
+            font-family: "Open Dyslexic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            text-align: left
+        }
+
+        h2,
+        h3 {
+            margin-top: 0;
+            font-family: "Henny Penny", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+        }
+
+        label {
+            display: inline-block
+        }
+
+        button {
+            border-radius: 0;
+            text-transform: none
+        }
+
+        button:focus {
+            outline: dotted 1px;
+            outline: -webkit-focus-ring-color auto 5px
+        }
+
+        button,
+        input {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            overflow: visible
+        }
+
+        [type=submit],
+        button {
+            -webkit-appearance: button;
+            appearance: button;
+        }
+
+        [type=submit]::-moz-focus-inner,
+        button::-moz-focus-inner {
+            padding: 0;
+            border-style: none
+        }
+
+        input[type=checkbox] {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0
+        }
+
+        ::-webkit-file-upload-button {
+            font: inherit;
+            -webkit-appearance: button
+        }
+
+        h2,
+        h3 {
+            font-weight: 500;
+            line-height: 1.2
+        }
+
+        h2 {
+            font-size: 2rem
+        }
+
+        h3 {
+            font-size: 1.75rem
+        }
+
+        .container {
+            margin-right: auto;
+            margin-left: auto
+        }
+
+        @media (min-width:576px) {
+            .container {
+                max-width: 540px
+            }
+        }
+
+        @media (min-width:768px) {
+            .container {
+                max-width: 720px
+            }
+
+            .col-md-6 {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 50%;
+                flex: 0 0 50%;
+                max-width: 50%
+            }
+        }
+
+        @media (min-width:992px) {
+            .container {
+                max-width: 960px
+            }
+
+            .col-lg-5 {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 41.66667%;
+                flex: 0 0 41.66667%;
+                max-width: 41.66667%
+            }
+        }
+
+        @media (min-width:1200px) {
+            .container {
+                max-width: 1140px
+            }
+        }
+
+        .row {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px
+        }
+
+        .col-lg-5,
+        .col-md-6 {
+            position: relative
+        }
+
+        .btn,
+        .form-control {
+            padding: .375rem .75rem;
+            line-height: 1.5;
+            font-weight: 400
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            background-color: #fff;
+            background-clip: padding-box;
+            border-radius: .25rem
+        }
+
+        .btn,
+        a {
+            background-color: transparent
+        }
+
+        .form-control::-ms-expand {
+            background-color: transparent;
+            border: 0
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            -webkit-box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+            box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25)
+        }
+
+        .form-control::-webkit-input-placeholder {
+            opacity: 1
+        }
+
+        .form-control:-ms-input-placeholder {
+            opacity: 1
+        }
+
+        .form-control::-ms-input-placeholder {
+            color: #6c757d;
+            opacity: 1
+        }
+
+        .form-control:disabled {
+            background-color: #e9ecef;
+            opacity: 1
+        }
+
+        .form-group {
+            margin-bottom: 1rem
+        }
+
+        .custom-control-input.is-valid:focus:not(:checked)~.custom-control-label::before,
+        .was-validated .custom-control-input:valid:focus:not(:checked)~.custom-control-label::before {
+            border-color: #28a745
+        }
+
+        .custom-control-input.is-invalid:focus:not(:checked)~.custom-control-label::before,
+        .was-validated .custom-control-input:invalid:focus:not(:checked)~.custom-control-label::before {
+            border-color: #dc3545
+        }
+
+        .btn {
+            display: inline-block;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            -webkit-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+            -o-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
+        }
+
+        .btn:hover {
+            color: #212529
+        }
+
+        .btn:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+            box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25)
+        }
+
+        .btn:disabled {
+            opacity: .65
+        }
+
+        .btn-outline-primary:not(:disabled):not(.disabled).active,
+        .btn-outline-primary:not(:disabled):not(.disabled):active,
+        .btn-primary,
+        .btn-primary:disabled {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #0069d9;
+            border-color: #0062cc
+        }
+
+        .btn-primary:focus,
+        .btn-primary:not(:disabled):not(.disabled).active:focus,
+        .btn-primary:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5);
+            box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5)
+        }
+
+        .btn-primary:not(:disabled):not(.disabled).active,
+        .btn-primary:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #0062cc;
+            border-color: #005cbf
+        }
+
+        .btn-secondary:not(:disabled):not(.disabled).active,
+        .btn-secondary:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #545b62;
+            border-color: #4e555b
+        }
+
+        .btn-secondary:not(:disabled):not(.disabled).active:focus,
+        .btn-secondary:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5);
+            box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5)
+        }
+
+        .btn-success:not(:disabled):not(.disabled).active,
+        .btn-success:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #1e7e34;
+            border-color: #1c7430
+        }
+
+        .btn-success:not(:disabled):not(.disabled).active:focus,
+        .btn-success:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(72, 180, 97, .5);
+            box-shadow: 0 0 0 .2rem rgba(72, 180, 97, .5)
+        }
+
+        .btn-info:not(:disabled):not(.disabled).active,
+        .btn-info:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #117a8b;
+            border-color: #10707f
+        }
+
+        .btn-info:not(:disabled):not(.disabled).active:focus,
+        .btn-info:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(58, 176, 195, .5);
+            box-shadow: 0 0 0 .2rem rgba(58, 176, 195, .5)
+        }
+
+        .btn-warning:not(:disabled):not(.disabled).active,
+        .btn-warning:not(:disabled):not(.disabled):active {
+            color: #212529;
+            background-color: #d39e00;
+            border-color: #c69500
+        }
+
+        .btn-warning:not(:disabled):not(.disabled).active:focus,
+        .btn-warning:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(222, 170, 12, .5);
+            box-shadow: 0 0 0 .2rem rgba(222, 170, 12, .5)
+        }
+
+        .btn-danger:not(:disabled):not(.disabled).active,
+        .btn-danger:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #bd2130;
+            border-color: #b21f2d
+        }
+
+        .btn-danger:not(:disabled):not(.disabled).active:focus,
+        .btn-danger:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(225, 83, 97, .5);
+            box-shadow: 0 0 0 .2rem rgba(225, 83, 97, .5)
+        }
+
+        .btn-light:not(:disabled):not(.disabled).active,
+        .btn-light:not(:disabled):not(.disabled):active {
+            color: #212529;
+            background-color: #dae0e5;
+            border-color: #d3d9df
+        }
+
+        .btn-light:not(:disabled):not(.disabled).active:focus,
+        .btn-light:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(216, 217, 219, .5);
+            box-shadow: 0 0 0 .2rem rgba(216, 217, 219, .5)
+        }
+
+        .btn-dark:not(:disabled):not(.disabled).active,
+        .btn-dark:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #1d2124;
+            border-color: #171a1d
+        }
+
+        .btn-dark:not(:disabled):not(.disabled).active:focus,
+        .btn-dark:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(82, 88, 93, .5);
+            box-shadow: 0 0 0 .2rem rgba(82, 88, 93, .5)
+        }
+
+        .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+        .btn-outline-primary:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .5);
+            box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .5)
+        }
+
+        .btn-outline-secondary:not(:disabled):not(.disabled).active,
+        .btn-outline-secondary:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d
+        }
+
+        .btn-outline-secondary:not(:disabled):not(.disabled).active:focus,
+        .btn-outline-secondary:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(108, 117, 125, .5);
+            box-shadow: 0 0 0 .2rem rgba(108, 117, 125, .5)
+        }
+
+        .btn-outline-success:not(:disabled):not(.disabled).active,
+        .btn-outline-success:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745
+        }
+
+        .btn-outline-success:not(:disabled):not(.disabled).active:focus,
+        .btn-outline-success:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(40, 167, 69, .5);
+            box-shadow: 0 0 0 .2rem rgba(40, 167, 69, .5)
+        }
+
+        .btn-outline-info:not(:disabled):not(.disabled).active,
+        .btn-outline-info:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #17a2b8;
+            border-color: #17a2b8
+        }
+
+        .btn-outline-info:not(:disabled):not(.disabled).active:focus,
+        .btn-outline-info:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(23, 162, 184, .5);
+            box-shadow: 0 0 0 .2rem rgba(23, 162, 184, .5)
+        }
+
+        .btn-outline-warning:not(:disabled):not(.disabled).active,
+        .btn-outline-warning:not(:disabled):not(.disabled):active {
+            color: #212529;
+            background-color: #ffc107;
+            border-color: #ffc107
+        }
+
+        .btn-outline-warning:not(:disabled):not(.disabled).active:focus,
+        .btn-outline-warning:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(255, 193, 7, .5);
+            box-shadow: 0 0 0 .2rem rgba(255, 193, 7, .5)
+        }
+
+        .btn-outline-danger:not(:disabled):not(.disabled).active,
+        .btn-outline-danger:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545
+        }
+
+        .btn-outline-danger:not(:disabled):not(.disabled).active:focus,
+        .btn-outline-danger:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(220, 53, 69, .5);
+            box-shadow: 0 0 0 .2rem rgba(220, 53, 69, .5)
+        }
+
+        .btn-outline-light:not(:disabled):not(.disabled).active,
+        .btn-outline-light:not(:disabled):not(.disabled):active {
+            color: #212529;
+            background-color: #f8f9fa;
+            border-color: #f8f9fa
+        }
+
+        .btn-outline-light:not(:disabled):not(.disabled).active:focus,
+        .btn-outline-light:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(248, 249, 250, .5);
+            box-shadow: 0 0 0 .2rem rgba(248, 249, 250, .5)
+        }
+
+        .btn-outline-dark:not(:disabled):not(.disabled).active,
+        .btn-outline-dark:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #343a40;
+            border-color: #343a40
+        }
+
+        .btn-outline-dark:not(:disabled):not(.disabled).active:focus,
+        .btn-outline-dark:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 .2rem rgba(52, 58, 64, .5);
+            box-shadow: 0 0 0 .2rem rgba(52, 58, 64, .5)
+        }
+
+        .custom-control-input:focus:not(:checked)~.custom-control-label::before {
+            border-color: #80bdff
+        }
+
+        .custom-control-input:not(:disabled):active~.custom-control-label::before {
+            color: #fff;
+            background-color: #b3d7ff;
+            border-color: #b3d7ff
+        }
+
+        .close:not(:disabled):not(.disabled):focus,
+        .close:not(:disabled):not(.disabled):hover {
+            opacity: .75
+        }
+
+        .rounded {
+            border-radius: .25rem !important
+        }
+
+        .rounded-left {
+            border-top-left-radius: .25rem !important;
+            border-bottom-left-radius: .25rem !important
+        }
+
+        .d-flex {
+            display: -webkit-box !important;
+            display: -ms-flexbox !important;
+            display: flex !important
+        }
+
+        .justify-content-center {
+            -webkit-box-pack: center !important;
+            -ms-flex-pack: center !important;
+            justify-content: center !important
+        }
+
+        .align-items-center {
+            -webkit-box-align: center !important;
+            -ms-flex-align: center !important;
+            align-items: center !important;
+            text-align: center;
+        }
+
+        .w-50 {
+            width: 50% !important
+        }
+
+        .mb-4 {
+            margin-bottom: 1.5rem !important
+        }
+
+        .mb-5 {
+            margin-bottom: 3rem !important
+        }
+
+        .p-3 {
+            padding: 1rem !important
+        }
+
+        .p-4 {
+            padding: 1.5rem !important
+        }
+
+        .px-5 {
+            padding-right: 3rem !important;
+            padding-left: 3rem !important
+        }
+
+        .text-center {
+            text-align: center !important
+        }
+
+        @media (min-width:768px) {
+            .d-md-flex {
+                display: -webkit-box !important;
+                display: -ms-flexbox !important;
+                display: flex !important
+            }
+
+            .p-md-5 {
+                padding: 3rem !important
+            }
+
+            .text-md-right {
+                text-align: right !important
+            }
+        }
+
+        body {
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: 400;
+            background: #f8f9fd;
+            color: gray
+        }
+
+        a {
+            -webkit-transition: .3s;
+            -o-transition: .3s;
+            transition: .3s;
+            color: #8d448b
+        }
+
+        a:focus,
+        a:hover {
+            text-decoration: none !important;
+            outline: 0 !important;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            color: #8d448b
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .ftco-section {
+            padding: 2em 0
+        }
+
+        .heading-section {
+            font-size: 28px;
+            color: #000
+        }
+
+        .login-wrap {
+            position: relative;
+            background: #fff;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 10px 34px -15px rgba(0, 0, 0, .24);
+            -moz-box-shadow: 0 10px 34px -15px rgba(0, 0, 0, .24);
+            box-shadow: 0 10px 34px -15px rgba(0, 0, 0, .24)
+        }
+
+        .login-wrap h3 {
+            font-weight: 700;
+            font-size: 20px;
+            color: #8d448b
+        }
+
+        .login-wrap .icon {
+            width: 80px;
+            height: 80px;
+            background: #8d448b;
+            border-radius: 50%;
+            font-size: 30px;
+            margin: 0 auto 10px;
+            overflow: hidden;
+        }
+
+        .login-wrap .icon img {
+            width: 100%;
+            z-index: 2;
+        }
+
+        .login-wrap .icon span {
+            color: #fff;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .btn {
+            border-radius: 40px;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            font-size: 15px
+        }
+
+        .btn:active,
+        .btn:focus,
+        .btn:hover {
+            outline: 0
+        }
+
+        .btn.btn-primary,
+        .btn.btn-primary a {
+            background: #8d448b !important;
+            border: 1px solid #8d448b !important;
+            color: #fff !important
+        }
+
+        .btn.btn-primary:hover,
+        .btn.btn-primary:hover a {
+            border: 1px solid #8d448b;
+            background: 0 0;
+            color: #8d448b
+        }
+
+        .form-group {
+            position: relative
+        }
+
+        .form-group .submit {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            margin: 0 auto
+        }
+
+        @media (max-width:767.98px) {
+            .form-group .submit {
+                top: 0
+            }
+        }
+
+        .fa {
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .fa-user-o:before {
+            content: "\f2c0";
+        }
+    </style>
+</head>
+
+<body>
+    <section class="root ftco-section hidden">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h2 class="heading-section"><img src="images/ducks.webp" width="50%"></h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="login-wrap p-4 p-md-5">
+                        <h3 class="text-center mb-4">Ducky's TalesUp</h3>
+                        <div class="icon d-flex align-items-center justify-content-center">
+                            <img id="profile" class="hidden" />
+                            <span class="fa fa-user-o"></span>
+                        </div>
+                        <div class="login align-items-center justify-content-center">
+                            <h4>Disconnected</h4>
+                            <button id="loginBtn">Login to Twitch</button>
+                        </div>
+                        <div class="poll align-items-center justify-content-center hidden">
+                            <button id="startPollBtn">Start Poll</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
