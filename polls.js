@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     checkTwitchLogin();
     document.getElementById('loginBtn').addEventListener('click', loginToTwitch);
     document.getElementById('startPollBtn').addEventListener('click', createPollFromTalesUp);
+    document.getElementById('fixFontBtn').addEventListener('click', switchFontFace);
 });
 
 function checkTwitchLogin() {
@@ -186,11 +187,22 @@ function injectContentScript() {
     return textContentArray;
 }
 
-function extractAccessTokenFromUrl(url) {
-    console.log('url: ' + url);
-    if (url) {
-        const match = url.match(/#access_token=([^&]+)/);
-        return match && match[1] ? match[1] : null;
-    }
-    return null;
+function switchFontFace() {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const activeTab = tabs[0];
+        if (activeTab.url.includes('talesup.io')) {
+            chrome.scripting.insertCSS({
+                target: { tabId: activeTab.id },
+                css: `@font-face { font-family: "Open Dyslexic"; src: url('${chrome.runtime.getURL('fonts/OpenDyslexic-Regular.woff')}') format('woff'); } html body *, body #root *  { font-family: "Open Dyslexic" !important; line-height: 1.7em !important; word-spacing: .35em !important; letter-spacing: 0.08em !important;}`
+            });
+        } else {
+            console.error('Not on the proper talesup.io page.');
+        }
+    });
+}
+
+function extractAccessTokenFromUrl(urlString) {
+    const url = new URL(urlString);
+    const params = new URLSearchParams(url.hash.substring(1));
+    return params.get("access_token");
 }
