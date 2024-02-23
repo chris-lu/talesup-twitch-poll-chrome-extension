@@ -19,16 +19,27 @@ a {
 
 .btn,
 .checkbox-wrap,
-[type=button]:not(:disabled),
-[type=reset]:not(:disabled),
-[type=submit]:not(:disabled),
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled),
 button:not(:disabled) {
     cursor: pointer
 }
 
-@font-face { font-family: "FontAwesome"; src: url(fonts/FontAwesome-Webfont.woff) format('woff') }
-@font-face { font-family: "Henny Penny"; src: url(fonts/HennyPenny-Regular.woff) format('woff') }
-@font-face { font-family: "Open Dyslexic"; src: url(fonts/OpenDyslexic-Regular.woff) format('woff') }
+@font-face {
+    font-family: "FontAwesome";
+    src: url("fonts/FontAwesome-Webfont.woff") format("woff")
+}
+
+@font-face {
+    font-family: "Henny Penny";
+    src: url("fonts/HennyPenny-Regular.woff") format("woff")
+}
+
+@font-face {
+    font-family: "Open Dyslexic";
+    src: url("fonts/OpenDyslexic-Regular.woff") format("woff")
+}
 
 :root {
     --blue: #007bff;
@@ -57,14 +68,13 @@ button:not(:disabled) {
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
-    --font-family-sans-serif: "Open Dyslexic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+    --font-family-sans-serif: "Open Dyslexic", -apple-system, "BlinkMacSystemFont", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
 }
 
 *,
 ::after,
 ::before {
-    -webkit-box-sizing: border-box;
     box-sizing: border-box
 }
 
@@ -114,19 +124,18 @@ input {
     overflow: visible
 }
 
-[type=submit],
+[type="submit"],
 button {
-    -webkit-appearance: button;
     appearance: button;
 }
 
-[type=submit]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner,
 button::-moz-focus-inner {
     padding: 0;
     border-style: none
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0
@@ -134,7 +143,7 @@ input[type=checkbox] {
 
 ::-webkit-file-upload-button {
     font: inherit;
-    -webkit-appearance: button
+    appearance: button
 }
 
 .font {
